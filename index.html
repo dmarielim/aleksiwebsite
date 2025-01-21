@@ -88,8 +88,8 @@
       background-color: #e5533d;
     }
 
-    /* WhatsApp Button */
-    .whatsapp-button {
+    /* WhatsApp Button (with cooldown) */
+    #boobRequestButton {
       background-color: #25D366; /* WhatsApp green */
       color: #fff;
       font-size: 18px;
@@ -98,11 +98,21 @@
       cursor: pointer;
       margin-top: 20px;
       border-radius: 5px;
-      text-decoration: none; /* for the link style */
-      display: inline-block; /* so it looks like a button */
+      text-decoration: none; /* for link style if we used <a> */
+      display: inline-block;
     }
-    .whatsapp-button:hover {
+    #boobRequestButton:hover:enabled {
       background-color: #1aad5c;
+    }
+    #boobRequestButton:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    #cooldownMessage {
+      color: #ff6347;
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -145,52 +155,14 @@
     <p id="complimentMessage">Click to receive your compliment!</p>
   </div>
 
-  <!-- WhatsApp (Desktop) Request Boob Picture Button -->
+  <!-- WhatsApp Request Boob Picture Button with 4-hour cooldown -->
   <div class="section">
     <h2>Request Boob Picture (WhatsApp Web)</h2>
-    <!-- This link is formatted for WhatsApp Web on a computer.
-         The exclamation mark is encoded as %21 to avoid potential issues. -->
-    <a
-      class="whatsapp-button"
-      href="https://web.whatsapp.com/send?phone=14022817398&text=Aleksi%20wants%20boob%20pics%21"
-      target="_blank"
-    >
+    <button id="boobRequestButton" onclick="boobRequestClicked()">
       Request Boob Picture
-    </a>
+    </button>
+    <p id="cooldownMessage"></p>
   </div>
 
   <script>
-    function updateGoobinLevel() {
-      const levels = ["Low Goobin", "Medium Goobin", "High Goobin", "MAXIMUM GOOBIN"];
-      const randomLevel = levels[Math.floor(Math.random() * levels.length)];
-      document.getElementById("goobinLevel").textContent = `Goobin Level: ${randomLevel}`;
-      
-      if (randomLevel === "MAXIMUM GOOBIN") {
-        document.getElementById("goobinMessage").textContent = "Aleksi’s Goobin is OFF THE CHARTS! Go right to nighty!";
-      } else {
-        document.getElementById("goobinMessage").textContent = "";
-      }
-    }
-
-    function getMood() {
-      const moods = [
-        "Dellos is grump",
-        "Dellos is very grump",
-        "Dellos is extremely grump"
-      ];
-      const randomMood = moods[Math.floor(Math.random() * moods.length)];
-      document.getElementById("moodMessage").textContent = randomMood;
-    }
-
-    function giveCompliment() {
-      const compliments = [
-        "Leksi Bear is looking mighty fly",
-        "Leksi Bear is the cutest macho leks in all of Finland",
-        "Leksi Bear is pretty fly for a white guy"
-      ];
-      const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
-      document.getElementById("complimentMessage").textContent = randomCompliment;
-    }
-  </script>
-</body>
-</html>
+    /******************************************************
